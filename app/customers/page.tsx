@@ -12,7 +12,7 @@ export default async function Page() {
     <div>
       <p>Customers Page</p>
       {customers.map((customer) => (
-        <p>
+        <p key={customer.customer_id}>
           {customer.customer_id}, {customer.driving_license}
         </p>
       ))}

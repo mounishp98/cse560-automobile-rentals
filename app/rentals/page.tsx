@@ -12,7 +12,7 @@ export default async function Page() {
     <div>
       <p>Reantals Page</p>
       {rentals.map((rental) => (
-        <p>
+        <p key={rental.rental_id}>
           {rental.rental_id}, {rental.customer_id}, {`${rental.pickuptime}`}
         </p>
       ))}
