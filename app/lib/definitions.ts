@@ -18,6 +18,7 @@ export type Rental = {
   registration: string;
   model: string;
   type: string;
+  odometer_reading: Number;
   pickuptime: string;
   dropofftime: string;
   payment_id: string;

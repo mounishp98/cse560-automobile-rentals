@@ -3,7 +3,11 @@ import {
   fetchPaginatedCustomers,
   fetchPaginatedRentals,
 } from "@/app/lib/query";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IdentificationIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { formatDateTimeToLocal, formatDateToLocal } from "@/app/lib/utils";
+import { faAddressCard, faCar } from "@fortawesome/free-solid-svg-icons";
 
 export default async function RentalsTable({
   currentPage,
@@ -20,6 +24,75 @@ export default async function RentalsTable({
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+          <div className="md:hidden">
+            {rentals?.map((rental) => (
+              <div
+                key={rental.rental_id}
+                className="mb-2 w-full rounded-md bg-white p-4"
+              >
+                <div className="flex items-center justify-between border-b pb-4">
+                  <p className="text-sm sm:text-md text-gray-500">
+                    {formatDateTimeToLocal(rental.pickuptime)} -{" "}
+                    {formatDateTimeToLocal(rental.dropofftime)}
+                  </p>
+                  <div className="flex flex-row gap-1">
+                    <CurrencyDollarIcon className="w-5" />
+                    <p className="text-sm sm:text-md text-gray-500">
+                      {rental.trip_cost.toString()}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex w-full items-center justify-between pt-4">
+                  <div className="flex flex-col gap-1 justify-start">
+                    <div className="flex flex-row gap-1">
+                      <UserCircleIcon className="w-6" />
+                      <p className="text-lg font-medium">{rental.name}</p>
+                    </div>
+                    <div className="flex flex-row gap-1">
+                      <IdentificationIcon className="w-6 text-gray-500" />
+                      <p className="text-md font-medium text-gray-500 align-bottom text-start">
+                        {rental.driving_license}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-row gap-2">
+                    <div className="flex flex-col gap-2 justify-end">
+                      <div className="flex flex-row gap-2 justify-end">
+                        <p className="text-lg font-medium">{rental.model}</p>
+                        <div className="w-6">
+                          <FontAwesomeIcon className="w-6" icon={faCar} />
+                        </div>
+                      </div>
+                      <div className="flex flex-row gap-2 justify-end">
+                        <p className="text-md font-medium text-gray-500 align-bottom text-end">
+                          {rental.registration}
+                        </p>
+                        <div className="w-6">
+                          <FontAwesomeIcon
+                            className="w-6 text-gray-500"
+                            icon={faAddressCard}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {/* <div className="flex flex-col gap-1 justify-end">
+                      <p className="text-lg font-medium">{rental.type}</p>
+                      <p className="text-md font-medium text-gray-500 align-baseline text-end">
+                        {rental.odometer_reading.toString()}
+                      </p>
+                    </div> */}
+                    {/* <div className="flex flex-col gap-1 justify-end">
+                      <div className="">
+                        <FontAwesomeIcon className="w-6" icon={faCar} />
+                      </div>
+                      
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>

@@ -1,6 +1,8 @@
 import { Customer } from "@/app/lib/definitions";
 import { fetchPaginatedCustomers } from "@/app/lib/query";
 import { formatDateToLocal } from "@/app/lib/utils";
+import { IdentificationIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon } from "@heroicons/react/24/solid";
 
 export default async function CustomersTable({
   currentPage,
@@ -24,18 +26,28 @@ export default async function CustomersTable({
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
                 <div className="flex items-center justify-between border-b pb-4">
-                  <p className="text-sm sm:text-md text-gray-500">
-                    {customer.driving_license}
-                  </p>
-                  <p className="text-sm sm:text-md text-gray-500">
-                    {customer.email} | {customer.phone}
-                  </p>
+                  <div className="flex flex-row gap-1">
+                    <IdentificationIcon className="w-4" />
+                    <p className="text-sm sm:text-md text-gray-500">
+                      {customer.driving_license}
+                    </p>
+                  </div>
+                  <div className="flex flex-row gap-1">
+                    <EnvelopeIcon className="w-4" />
+                    <p className="text-sm sm:text-md text-gray-500">
+                      {customer.email}
+                    </p>
+                    <PhoneIcon className="w-4" />{" "}
+                    <p className="text-sm sm:text-md text-gray-500">
+                      {customer.phone}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
-                  <p className="text-xl font-medium">{customer.name}</p>
+                  <p className="text-lg font-medium">{customer.name}</p>
                   <div className="flex flex-row">
-                    {/* <p className="text-xl text-gray-500">DOB: </p> */}
-                    <p className="text-xl font-medium">
+                    {/* <p className="text-lg text-gray-500">DOB: </p> */}
+                    <p className="text-lg font-medium">
                       {formatDateToLocal(customer.dob)}
                     </p>
                   </div>
