@@ -1,21 +1,29 @@
-import { fetchCustomers, fetchRentals } from "@/app/lib/query";
-import { Customer, Rental } from "../lib/definitions";
+import { fetchRentalsPages } from "@/app/lib/query";
+import { lusitana } from "@/app/ui/fonts";
+import { Suspense } from "react";
+import Table from "@/app/ui/rentals/table";
+import Pagination from "@/app/ui/pagination";
 
-export default async function Page() {
-  const rentals: Rental[] = await fetchRentals();
-
-  if (!rentals || rentals.length === 0) {
-    return <p className="mt-4 text-gray-400">No data available.</p>;
-  }
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { page?: string };
+}) {
+  const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = await fetchRentalsPages();
 
   return (
-    <div>
-      <p>Reantals Page</p>
-      {rentals.map((rental) => (
-        <p key={rental.rental_id}>
-          {rental.rental_id}, {rental.customer_id}, {`${rental.pickuptime}`}
-        </p>
-      ))}
+    <div className="w-full">
+      <div className="flex w-full items-center justify-between">
+        <h1 className={`${lusitana.className} text-2xl`}>Rentals</h1>
+      </div>
+
+      <Suspense>
+        <Table currentPage={currentPage} />
+      </Suspense>
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={totalPages} />
+      </div>
     </div>
   );
 }
